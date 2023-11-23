@@ -1,1 +1,25 @@
-<p>todo works!</p>
+<hr>
+todo
+<div class="row">
+    <div class="col-md-6">
+        <ol class="list-group" style="min-height: 200px;max-height: 200px; overflow-y: auto;  border: 1px solid #ccc;        padding: 10px;">
+            <app-todo-item
+             *ngFor="let todo of todos.reverse()" 
+             [todo]="todo"
+             (sendDelete)="deleteTodo($event)" />
+           </ol> 
+    </div>
+    <div class="col-md-6">
+       
+        <div class="mb-3 form-floating">
+            <input type="text" class="form-control" [(ngModel)]="name" id="floatingText" >
+            <label for="floatingText" >Name</label>
+
+          </div>
+          <div class="mb-3 form-floating">
+                <textarea class="form-control" placeholder="put description here" [(ngModel)]="description" id="floatingTextarea"></textarea>
+                <label for="floatingTextarea">Description</label>
+              </div>
+           <button class="btn btn-primary" (click)="addTodo()">Add Todo</button>   
+    </div>
+</div>

@@ -20,6 +20,7 @@ import { FibonacciPipe } from './pipes/fibonacci.pipe';
 import { FibonacciListComponent } from './components/fibonacci-list/fibonacci-list.component';
 import { LoggerService } from './services/logger.service';
 import { TodoComponent } from './todo/todo/todo.component';
+import { TodoItemComponent } from './todo/todo-item/todo-item.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { TodoComponent } from './todo/todo/todo.component';
     CustomStructuralDirective,
     FibonacciPipe,
     FibonacciListComponent,
-    TodoComponent
+    TodoComponent,
+    TodoItemComponent
   ],
   imports: [
     BrowserModule,
