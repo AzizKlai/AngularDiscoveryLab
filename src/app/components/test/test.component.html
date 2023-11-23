@@ -1,0 +1,47 @@
+<hr>
+<main  class="main">
+    <p [ngClass]="{'tunis':tunis, 'algerie':algerie}">
+      bonjour  </p><p class="isp">{{title}}</p>
+  </main>
+  
+  
+  
+  <div class="row">
+    <div class="col ">
+      <button class="btn btn-info" (click)="changeStatus()">  show/hide </button>
+    </div>
+    <div class="col "  [hidden]="show" [style.backgroundColor]="bgColor" >property Binding {{bgColor}}</div>
+  </div>
+   
+   <div class="alert alert-success">
+    aziz is here <i class="fa-solid fa-car"></i>
+  </div>
+ 
+    <hr>
+  <app-miniword></app-miniword>
+  <div >
+    <input type="text" class="form-control" appRainbow  >
+  </div>
+  <hr>
+  structural directive
+  <div style="text-align: center;">  
+    <p *appCustomStructural="4;   param2:'secondp'; let index=index;   let message=somethingToShare" >
+      testing the customised structural directive with this context: iteration {{index}}
+    </p>
+  </div>
+
+  <hr>
+  
+  <app-fibonacci-list/>
+
+
+  <hr>
+  <app-test-fils (sendRequestToData)="processReq($event)" [filsProperty]="'form father component'" />
+  <hr>
+  two way binding
+  <app-visite-card></app-visite-card>
+  <hr>
+  
+
+
+  <router-outlet/>

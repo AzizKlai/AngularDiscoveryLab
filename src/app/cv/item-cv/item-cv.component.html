@@ -1,0 +1,5 @@
+<li class="list-group-item"
+(click)="selectCv()"
+>
+   <img src="assets/images/{{personne!.path}}" [style.width]="size" [style.height]="size" alt="{{personne!.firstname}}"/>  {{personne!.name | titlecase}} {{personne!.firstname | titlecase}}
+</li>    
