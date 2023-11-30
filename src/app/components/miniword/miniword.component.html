@@ -1,6 +1,4 @@
 <div class="card">
-     <div class="row">
-     <h1 [ngStyle]="{'color': color, 'font-size': size+'px' ,'font-family':font }">  Text</h1></div>
     <div class="row align-items-start">
         <div  class="col input">
           <input type="color" class="form-control" [(ngModel)]="color">
@@ -13,5 +11,7 @@
             <option *ngFor="let font of fonts" >{{font}}</option>
           </select>
         </div>
-      </div>
+      </div>      
+     <div class="row">
+      <h1 [ngStyle]="{'color': color, 'font-size': size+'px' ,'font-family':font }">  Text</h1></div>
 </div>

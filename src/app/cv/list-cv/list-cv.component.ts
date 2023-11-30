@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { Person } from 'src/app/Model/Person';
 
 @Component({
@@ -7,15 +7,11 @@ import { Person } from 'src/app/Model/Person';
   styleUrls: ['./list-cv.component.css']
 })
 export class ListCvComponent {
+  @Input() showFilters!:boolean
   @Input()personnes: Person[]=[];
-  @Output() selectedCv= new EventEmitter()
-  constructor(){}
 
-  selectCv(selectedPersonne:Person){
-    this.selectedCv.emit(
-       selectedPersonne
-    )
-
+  @Output() changeTab=new EventEmitter()
+  setJunior(bool:boolean){
+  this.changeTab.emit(bool)
   }
-
 }

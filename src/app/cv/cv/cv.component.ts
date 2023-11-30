@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Person } from 'src/app/Model/Person';
+import { CvService } from '../services/cv.service';
+import { BehaviorSubject, Observable, Subscription, catchError, filter, forkJoin, map, merge, of, share, switchMap, tap } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-cv',
@@ -7,22 +10,67 @@ import { Person } from 'src/app/Model/Person';
   styleUrls: ['./cv.component.css']
 })
 export class CvComponent implements OnInit {
-  personnes: Person[]=[];
-  selectedPersonne!: Person;
-  constructor(){}
-  ngOnInit(): void {
-    this.personnes=[
-      new Person(1,"ala","ben haddoud",20,11111111,"chef"),
-      new Person(2,"hammadi","bennour",25,55555555,"driver","persona-2.jpg"),
-      new Person(3,"hazam","tawigar",30,88888888,"professor","persona-3.jpg"),
-      new Person(4,"amor","gartawi",35,44444444,"doctor","persona-4.jpg")
-    ]
-    this.selectedPersonne=this.personnes[0]
-  }
-  selectCv(person:Person){
-    this.selectedPersonne=person
+  personnes$! : Observable<Person[]>
+  sharedPersonnes$!:Observable<Person[]>
+  personnes:Person[]=[]
+  filteredPersonnes:Person[]=[]
+  
+  selectedPerson$!:Observable<Person|null>;
+ // subscription:Subscription;
+  constructor(private cvService:CvService){
+    
   }
 
+  ngOnInit(): void {
+    //operator share
+    this.sharedPersonnes$=this.cvService.getHttpPersonnes$().pipe(share());
+    this.personnes$=this.cvService.getHttpPersonnes$()
+    /*.pipe(tap((table)=>{this.personnes=table, this.changeTab(true)}) );*/
+      this.changeTab(true)
+    this.selectedPerson$ = this.cvService.getSelectedPersonObservable$()
+    
+    //this.filteredPersonnes$=this.cvService.getSelectedPersonObservable$().pipe(filter((e)=>{e?.age>40}))
+    //this.personnes=this.cvService.getPersonnes(); 
+    //this.selectedPersonne=this.personnes[0]
+  }
+
+  changeTab(bool: boolean) {
+   // this.cvService.changeSelectedPerson(null)
+   if(bool)
+   this.sharedPersonnes$.pipe(map((personnes)=> this.personnes.filter(person => person.age < 40)))
+  else 
+  this.sharedPersonnes$.pipe(map((personnes)=> this.personnes.filter(person => person.age >= 40)))
+  
+    if(bool)
+    this.filteredPersonnes= this.personnes.filter(person => person.age < 40);
+  else this.filteredPersonnes=this.personnes.filter(person => person.age >= 40);
+    
+    
+    
+    /*this.personnes$.pipe(
+      switchMap(personnes => {
+        if (bool) {
+          return of(personnes.filter(person => person.age > 40));
+        } else {
+          return of(personnes.filter(person => person.age <= 40));
+        }
+      })
+    );*/
+    /*this.personnes$ = this.cvService.getHttpPersonnes$().pipe(
+      map(persons => {
+        if (bool) {
+          // Filter persons over the age of 40
+          return persons.filter(person => person?.age && person.age > 40);
+        } else {
+          // Filter persons under the age of 40
+          return persons.filter(person => person?.age && person.age <= 40);
+        }
+      })
+    );
+  }*/
+  }
+ 
+  
 
 
 }

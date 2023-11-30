@@ -1,4 +1,4 @@
-<div class="col-md-12 col-sm-12">
+<div *ngIf="personne" class="col-md-12 col-sm-12">
     <div class="card-container">
       <div class="card">
         <div class="front">
@@ -6,7 +6,7 @@
             <img src="assets/images/rotating_card_thumb.jpg">
           </div>
           <div class="user">
-            <img class="img-circle" src="assets/images/{{personne.path}}" alt="{{personne.firstname}}">
+            <img class="img-circle" src="assets/images/{{personne!.path | defaultImage}}" alt="{{personne.firstname}}">
           </div>
           <div class="content">
             <div class="main">
@@ -50,9 +50,9 @@
             </div>
           </div>
           <div class="footer">
-            <!--<button class="btn btn-danger" (click)="embaucher()">Embaucher</button>
-            <button class="btn btn-primary" (click)="getmoreinfo()">Details</button>
-            --></div>
+            <button class="btn btn-dark" (click)="embaucher()">Embaucher</button> 
+           <button class="btn btn-primary" style="margin-left: 1%;" (click)="getMoreInfo()">Details</button>
+           </div>
         </div>
       </div>
     </div>

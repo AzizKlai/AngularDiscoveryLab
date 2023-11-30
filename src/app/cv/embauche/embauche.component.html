@@ -1,0 +1,18 @@
+<div *ngIf="personnes && personnes.length>0">
+    <h4>List d'embauche:</h4>
+    <div class="image-span position-relative" *ngFor="let personne of personnes">
+    <button type="button" class="btn-close position-absolute top-0 end-0" style="margin: 1%;" aria-label="Close" (click)="debaucher(personne)"></button>
+                
+                <img  src="assets/images/{{personne!.path | defaultImage}}" 
+                [style.width]="'150px'" [style.height]="'150px'" alt="{{personne!.firstname}}"
+                class="rounded-circle"/> 
+           
+                <p class="row-cols-1">{{personne!.name | titlecase}} {{personne!.firstname | titlecase}}</p>
+
+            
+        
+        
+         
+    
+     </div>
+</div>

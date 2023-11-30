@@ -1,0 +1,6 @@
+nav{
+    border-radius: 5px;
+}
+.active{
+    --bs-navbar-active-color:  #e90f0f;
+}

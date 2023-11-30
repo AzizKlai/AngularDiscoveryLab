@@ -21,6 +21,18 @@ import { FibonacciListComponent } from './components/fibonacci-list/fibonacci-li
 import { LoggerService } from './services/logger.service';
 import { TodoComponent } from './todo/todo/todo.component';
 import { TodoItemComponent } from './todo/todo-item/todo-item.component';
+import { v4 as uuidv4} from 'uuid';
+import { TitleComponent } from './components/title/title.component';
+import { EmbaucheComponent } from './cv/embauche/embauche.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { NotfoundComponent } from './components/notfound/notfound.component';
+import { DetailComponent } from './cv/detail/detail.component';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { LoginComponent } from './components/login/login.component';
+import { MergeComponent } from './operators/merge/merge.component';
+
 
 @NgModule({
   declarations: [
@@ -54,15 +66,28 @@ import { TodoItemComponent } from './todo/todo-item/todo-item.component';
     FibonacciPipe,
     FibonacciListComponent,
     TodoComponent,
-    TodoItemComponent
+    TodoItemComponent,
+    TitleComponent,
+    EmbaucheComponent,
+    NavbarComponent,
+    NotfoundComponent,
+    DetailComponent,
+    LoginComponent,
+    MergeComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ROUTING,
-   // HttpClientModule
+   HttpClientModule,
+   BrowserAnimationsModule, // required animations module
+   ToastrModule.forRoot(), // ToastrModule added
   ],
-  providers: [],
+  providers: [
+    { provide:'randomId',
+      useValue:uuidv4
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

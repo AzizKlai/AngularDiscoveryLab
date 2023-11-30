@@ -1,10 +1,12 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, inject } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { LoggerService } from 'src/app/services/logger.service';
 
 @Component({
   selector: 'app-test',
   templateUrl: './test.component.html',
-  styleUrls: ['./test.component.css']
+  styleUrls: ['./test.component.css'],
+  providers:[LoggerService]
 })
 export class TestComponent {
   tunis=false
@@ -15,6 +17,8 @@ export class TestComponent {
   constructor( private loggerService:LoggerService ){  }
   changeStatus(){
     this.loggerService.log("changing status")
+    this.loggerService.push("usedBy test")
+    this.loggerService.log(this.loggerService.data)
     
     this.show=!this.show
     this.tunis=!this.tunis
@@ -24,4 +28,8 @@ export class TestComponent {
     alert(message)
 
   }
+
+
+
+    
 }

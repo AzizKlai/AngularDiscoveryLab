@@ -1,0 +1,8 @@
+.image-span {
+    display: inline-block;
+    text-align: center;
+    margin: 10px;
+  }
+  p {
+    margin-top: 5px; /* Adjust the margin as needed */
+  }

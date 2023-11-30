@@ -1,0 +1,11 @@
+.ng-invalid .ng-touched{
+    border-color: red;
+  }
+  .alert{
+    padding: 1%;
+  }
+  button{
+    margin-top: 1%;
+  }
+  
+  
