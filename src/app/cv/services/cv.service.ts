@@ -24,9 +24,11 @@ export class CvService {
     ]
   }
 
-    getHttpPersonnes$(): Observable<Person[]>{
+      getHttpPersonnes$(): Observable<Person[]>{
       return this.http.get<Person[]>('https://apilb.tridevs.net/api/personnes').pipe(
         map((value)=>{
+          console.log("zerzzzzzzzzzzzzzz");
+          
           this.personnes=value;
           return value;
         }),
