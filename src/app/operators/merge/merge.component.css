@@ -1,0 +1,16 @@
+
+
+  .spinner-border {
+    width: 1rem; /* Change the width */
+    height: 1rem; /* Change the height */
+    vertical-align: -.25em; /* Change the vertical align */
+    border-width: .5em; /* Change the border width */
+    animation-duration: 2s; /* Change the animation speed */
+  }
+  
+  /* Small spinner */
+  .spinner-border-sm {
+    width: 0.65rem; /* Change the width for small spinner */
+    height: 0.65rem; /* Change the height for small spinner */
+    border-width: .12em; /* Change the border width for small spinner */
+  }

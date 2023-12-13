@@ -1,0 +1,11 @@
+<div class="col">
+<div class="row">
+    <app-list-cv [showFilters]="false" [personnes]="(personnes$ | async) ?? []" ></app-list-cv>
+</div>
+<div class="row listdetail">
+    <router-outlet></router-outlet>
+</div>
+
+
+
+</div>

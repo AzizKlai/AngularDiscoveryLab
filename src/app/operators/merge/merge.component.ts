@@ -8,54 +8,51 @@ import { BehaviorSubject, Observable, map, merge, reduce, scan } from 'rxjs';
   styleUrls: ['./merge.component.css']
 })
 export class MergeComponent {
-  inputOne = 0
-  inputTwo = 0
+  firstfinished=false
+  secondfinished=false
+  firstNb=new FormControl(0)
+  secondNb=new FormControl(0)
+  
+  firstSubject$= new BehaviorSubject(0)
+  secondSubject$=new BehaviorSubject(0)
 
-  subjectOne$ = new BehaviorSubject(0)
-  subjectTwo$ = new BehaviorSubject(0)
-
-  mergedValue$ = new Observable<number>
+  mergeValue$=new Observable<number>
   scanValue$ = new Observable<number>
   reduceValue$ = new Observable<number>
+  
+  constructor(){
+    this.mergeValue$=merge(this.firstSubject$,this.secondSubject$)
+    this.scanValue$=this.mergeValue$.pipe(
+      scan((acc,x)=>{
+        if(x)
+        return x+acc
+      return acc
+      }))
+    this.reduceValue$=this.mergeValue$.pipe(
+      reduce((acc,x)=>{
+        if(x)
+        return x+acc
+      return acc
+      }))
+  }
+
+  changeFirstStream(){
+    if(this.firstNb.value)
+    this.firstSubject$.next(this.firstNb.value)
+  }
+  changeSecondStream(){
+    if(this.secondNb.value)
+    this.secondSubject$.next(this.secondNb.value)
+  }
 
   endFirstStream(){
-    this.subjectOne$.complete()
+    this.firstfinished=true
+    this.firstSubject$.complete()
   }
   endSecondStream(){
-    this.subjectTwo$.complete()
+    this.secondfinished=true
+  this.secondSubject$.complete()
   }
 
-  constructor(){
-    this.mergedValue$ = merge(this.subjectOne$, this.subjectTwo$).pipe(
-      map( value => value)
-    ) 
-
-    this.scanValue$ = this.mergedValue$.pipe(
-      scan((acc, value)=>{
-        if(value)
-          return acc+value
-        return acc
-      })
-    )
-
-    this.reduceValue$ = this.mergedValue$.pipe(
-      reduce((acc, value)=>{
-        if(value)
-          return acc+value
-        return acc
-      })
-    )
-
   }
-
-
-  changeStreamOneValue(){
-    if(this.inputOne)
-      this.subjectOne$.next(this.inputOne)
-  }
-  changeStreamTwoValue(){
-    if(this.inputTwo)
-      this.subjectTwo$.next(this.inputTwo)
-  }
-}
 

@@ -27,7 +27,7 @@ export class CvComponent implements OnInit {
   }
 
   changeTab(bool: boolean) { //change from junior to senior  filter the sharedPersonnes 
-  this.cvService.changeSelectedPerson(null)
+  //this.cvService.changeSelectedPerson(null)
   this.filteredPersonnes$=this.sharedPersonnes$.pipe
   (map((personnes)=> {
         if(bool)

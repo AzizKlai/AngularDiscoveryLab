@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ROUTING} from "./app.routing";
 import {HttpClientModule} from "@angular/common/http";
 import { MiniwordComponent } from './components/miniword/miniword.component';
@@ -30,8 +30,9 @@ import { DetailComponent } from './cv/detail/detail.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
-import { LoginComponent } from './components/login/login.component';
+import { LoginComponent } from './cv/login/login.component';
 import { MergeComponent } from './operators/merge/merge.component';
+import { MasterDetailComponent } from './cv/master-detail/master-detail.component';
 
 
 @NgModule({
@@ -73,7 +74,8 @@ import { MergeComponent } from './operators/merge/merge.component';
     NotfoundComponent,
     DetailComponent,
     LoginComponent,
-    MergeComponent
+    MergeComponent,
+    MasterDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -82,6 +84,7 @@ import { MergeComponent } from './operators/merge/merge.component';
    HttpClientModule,
    BrowserAnimationsModule, // required animations module
    ToastrModule.forRoot(), // ToastrModule added
+   ReactiveFormsModule, //to use form controler
   ],
   providers: [
     { provide:'randomId',

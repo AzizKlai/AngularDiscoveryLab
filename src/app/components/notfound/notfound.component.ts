@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-notfound',
@@ -6,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./notfound.component.css']
 })
 export class NotfoundComponent {
+ 
 
 }

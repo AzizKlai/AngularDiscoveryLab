@@ -7,7 +7,7 @@ import { Person } from 'src/app/Model/Person';
 export const detailResolver: ResolveFn<Person | null> = (route, state) => {
   const cvService:CvService=inject(CvService)
   const id= route.params['id']
-  const personne=cvService.getPersonneById(id);
+  const personne=cvService.getPersonneById$(id);
   if(!personne)
   return of(null)
 else 
