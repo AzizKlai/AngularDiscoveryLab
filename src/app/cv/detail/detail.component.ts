@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Person } from 'src/app/Model/Person';
 import { CvService } from '../services/cv.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subscription, catchError, map, of, tap } from 'rxjs';
+import { Observable,  catchError, map, of, tap } from 'rxjs';
 import { EmbaucheService } from '../services/embauche.service';
 
 @Component({
@@ -31,6 +31,7 @@ export class DetailComponent implements OnInit {
       this.cvService.deleteHttpPersonne(personne.id)
       this.cvService.deletePersonne(personne);
       this.embaucheService.debaucherPersonne(personne);
+      this.cvService.changeSelectedPerson(null)
       this.router.navigate(['cv']);
     }
     

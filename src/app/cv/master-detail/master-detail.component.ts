@@ -12,18 +12,19 @@ import { Router } from '@angular/router';
 })
 export class MasterDetailComponent implements OnDestroy {
   personnes$:Observable<Person[]>
-  selectedPerson$!:Observable<Person|null>;
   subscription
 
   constructor(private cvService:CvService, toastr:ToastrService,private router: Router){
+    cvService.changeSelectedPerson(null)
     this.personnes$=this.cvService.getHttpPersonnes$().pipe(
       catchError((response)=> {
         toastr.error("error recuparing data")
         return of(response)
         }))   
-
+    
     this.subscription= cvService.getSelectedPersonObservable$().subscribe((
       (person)=>{
+       // console.log("navigation here")
         if(person)
         this.router.navigate(['cv/masterDetail',person.id])
       }  
@@ -31,7 +32,7 @@ export class MasterDetailComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-      this.subscription.unsubscribe()
+     this.subscription.unsubscribe()
   }
 
 

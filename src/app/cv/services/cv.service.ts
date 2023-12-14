@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Person } from '../../Model/Person';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable, catchError, map, of, tap } from 'rxjs';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 
 @Injectable({
@@ -9,12 +10,15 @@ import { BehaviorSubject, Observable, catchError, map, of, tap } from 'rxjs';
 })
 export class CvService {
   private personnes: Person[]=[];
+  private fakePersonnes:Person[]=[];
 
   private selectedPerson$:BehaviorSubject<Person|null>=new BehaviorSubject<Person|null>(null );
   notYetselected=true;
   constructor(
-    private http:HttpClient) { 
-    this.personnes=[
+    private http:HttpClient) {
+      console.log("cvservice contructed here");
+       
+    this.fakePersonnes=[
       new Person(1,"ala","ben haddoud",20,11111111,"chef"),
       new Person(2,"hammadi","bennour",25,55555555,"driver","persona-2.jpg"),
       new Person(3,"hazam","tawigar",30,88888888,"professor","persona-3.jpg"),
@@ -25,8 +29,8 @@ export class CvService {
       getHttpPersonnes$(): Observable<Person[]>{
       return this.http.get<Person[]>('https://apilb.tridevs.net/api/personnes').pipe(
         map((value)=>{
-          this.personnes=value;
-          return value;
+          this.personnes=[...this.fakePersonnes,...value]
+          return this.personnes;
         }),
         catchError(()=>{
           return of(this.getFakeCvs());
@@ -75,9 +79,9 @@ export class CvService {
 
 
     deletePersonne(personne:Person){
-      let index = this.personnes.indexOf(personne);
+      let index = this.fakePersonnes.indexOf(personne);
       if(index>=0)
-      this.personnes.splice(index, 1);
+      this.fakePersonnes.splice(index, 1);
     }
     getFakeCvs():Person[]{
      this.personnes=[
@@ -95,7 +99,21 @@ export class CvService {
     changeSelectedPerson(person : Person|null){
       this.selectedPerson$.next(person)    
     }
-  
 
+
+
+    //add person
+    addHttpPerson(person:Person){
+      
+    }
+    addPerson(person:Person){
+      person.id=this.fakePersonnes[this.fakePersonnes.length-1].id+1
+      this.fakePersonnes.push(person)
+    }
+  
+  //save form state
+  addFormValues:any
+  getFormState(){return this.addFormValues}
+  saveFormState(data:any){this.addFormValues=data}
 
 }

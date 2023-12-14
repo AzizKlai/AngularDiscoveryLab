@@ -33,6 +33,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { LoginComponent } from './cv/login/login.component';
 import { MergeComponent } from './operators/merge/merge.component';
 import { MasterDetailComponent } from './cv/master-detail/master-detail.component';
+import { NgxUiLoaderModule } from 'ngx-ui-loader';
+import { AddCvComponent } from './cv/add-cv/add-cv.component';
 
 
 @NgModule({
@@ -75,7 +77,8 @@ import { MasterDetailComponent } from './cv/master-detail/master-detail.componen
     DetailComponent,
     LoginComponent,
     MergeComponent,
-    MasterDetailComponent
+    MasterDetailComponent,
+    AddCvComponent
   ],
   imports: [
     BrowserModule,
@@ -85,6 +88,8 @@ import { MasterDetailComponent } from './cv/master-detail/master-detail.componen
    BrowserAnimationsModule, // required animations module
    ToastrModule.forRoot(), // ToastrModule added
    ReactiveFormsModule, //to use form controler
+   NgxUiLoaderModule,
+  // NgxUiLoaderModule.forRoot(ngxUiLoaderConfig), //use to make custom config
   ],
   providers: [
     { provide:'randomId',

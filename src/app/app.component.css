@@ -1,0 +1,6 @@
+html {
+    overflow-y: scroll;
+    overflow-y: overlay;
+    scrollbar-gutter: stable;
+overflow: auto;
+  }

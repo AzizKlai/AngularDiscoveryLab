@@ -1,0 +1,7 @@
+.field-message{
+    color: rgb(199, 43, 84);
+}
+input.ng-invalid.ng-touched{
+    border: solid rgb(255 0 0 / 33%);
+
+}

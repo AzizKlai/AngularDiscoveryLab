@@ -7,7 +7,7 @@ export class Person {
     cin: number;
     job: string;
   
-    constructor(id = 0, name: string = "aziz", firstname: string = "", age: number = 90, cin: number = 0 , job: string = "", path: string = "persona-1.jpg") {
+    constructor(id:number = 0, name: string = "aziz", firstname: string = "", age: number = 90, cin: number = 0 , job: string = "", path: string = "persona-1.jpg") {
       this.id = id;
       this.name = name;
       this.firstname = firstname;

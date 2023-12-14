@@ -8,6 +8,7 @@ import { detailResolver } from "./cv/resolvers/detail.resolver";
 import { LoginComponent } from "./cv/login/login.component";
 import { MergeComponent } from "./operators/merge/merge.component";
 import { MasterDetailComponent } from "./cv/master-detail/master-detail.component";
+import { AddCvComponent } from "./cv/add-cv/add-cv.component";
 
 /*
 const APP_ROUTING: Routes = [
@@ -29,7 +30,7 @@ const APP_ROUTING: Routes = [
     {path:'masterDetail',component: MasterDetailComponent,
           children:[ {path : ':id' , component: DetailComponent,resolve: { personne: detailResolver },}]
         },
-    //{path : 'add' , component: AddComponent},
+    {path : 'add' , component: AddCvComponent},
     {path : 'detail/:id' , component: DetailComponent,resolve: { personne: detailResolver },}
   ]},
   {path: 'miniword', component: MiniwordComponent},
