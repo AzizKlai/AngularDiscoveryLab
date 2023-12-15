@@ -38,20 +38,9 @@ export class CvService {
       )
     }    
 
-    deleteHttpPersonne(id : number){
-      console.log("done")
-     this.http.delete(`https://apilb.tridevs.net/api/personnes/${id}`).subscribe(
-      (v)=>{console.log(v)},
-      (error)=>{console.log(error)}
-      )/*.pipe(
-      tap((v)=>{
-        console.log("done")
-    }),
-      catchError((e)=>{
-        console.log("notdone")
-        return of(null)
-      })
-     );*/
+    deleteHttpPersonne$(id : number){
+      console.log("delete")
+    return  this.http.delete(`https://apilb.tridevs.net/api/personnes/${id}`)
     }
 
     getPersonnes():Person[]{
@@ -69,9 +58,12 @@ export class CvService {
     }
     getPersonneByName$(name: string): Observable<Person[]> {
       if(name.length > 0){
-        const params = new HttpParams().set('filter', JSON.stringify({where:{name:{like:`%${name}%`}}}));
+        const params = new HttpParams().set('filter', JSON.stringify(
+          {where: 
+            {name:{like:`%${name}%`}}
+                  }));
         return this.http.get<Person[]>("https://apilb.tridevs.net/api/personnes/", { params });
-      }else{
+      }else{  
         return of([])
       }
       
@@ -103,8 +95,17 @@ export class CvService {
 
 
     //add person
-    addHttpPerson(person:Person){
-      
+    addHttpPerson$(person:Person) {
+      return this.http.post<Person>(
+        `https://apilb.tridevs.net/api/personnes`,  //?access_token=${localStorage.getItem('id',)}
+        { name: person.name,
+          firstname: person.firstname,
+          cin: person.cin,
+          job: person.job,
+          path: person.path,
+          age: person.age,
+        },
+      );
     }
     addPerson(person:Person){
       person.id=this.fakePersonnes[this.fakePersonnes.length-1].id+1

@@ -4,3 +4,9 @@ html {
     scrollbar-gutter: stable;
 overflow: auto;
   }
+  /* styles.css or styles.scss */
+.app-container {
+  position: relative; /* Set the position to relative to serve as a positioning context */
+  width: 100%; /* Optionally set width to 100% if you want it to take the full width */
+  height: 100vh; /* Optionally set height to 100vh if you want it to take the full height */
+}

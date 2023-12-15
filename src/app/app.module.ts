@@ -35,6 +35,8 @@ import { MergeComponent } from './operators/merge/merge.component';
 import { MasterDetailComponent } from './cv/master-detail/master-detail.component';
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { AddCvComponent } from './cv/add-cv/add-cv.component';
+import { SliderComponent } from './rxjs/slider/slider.component';
+import { AutocompleteSearchComponent } from './cv/autocomplete-search/autocomplete-search.component';
 
 
 @NgModule({
@@ -78,7 +80,9 @@ import { AddCvComponent } from './cv/add-cv/add-cv.component';
     LoginComponent,
     MergeComponent,
     MasterDetailComponent,
-    AddCvComponent
+    AddCvComponent,
+    SliderComponent,
+    AutocompleteSearchComponent
   ],
   imports: [
     BrowserModule,

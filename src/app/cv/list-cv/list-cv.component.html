@@ -2,9 +2,11 @@
     <button class="btn btn-secondary me-2 my-2" (click)="setJunior(true)">Juniors</button>
     <button class="btn btn-secondary ms-2 my-2" (click)="setJunior(false)">Seniors</button>
   </div>
-<ol class="list-group">
+  <div>
+    <ol class="list-group">
     <app-item-cv
      *ngFor="let personne of personnes" 
              [personne]="personne"        
       [size]="'60px'"></app-item-cv>
 </ol>
+</div>  

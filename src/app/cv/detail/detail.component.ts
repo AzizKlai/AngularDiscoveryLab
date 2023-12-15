@@ -4,6 +4,7 @@ import { CvService } from '../services/cv.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable,  catchError, map, of, tap } from 'rxjs';
 import { EmbaucheService } from '../services/embauche.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-detail',
@@ -13,11 +14,12 @@ import { EmbaucheService } from '../services/embauche.service';
 export class DetailComponent implements OnInit {
   personne$!:Observable<Person|null>
   constructor(
+    public toastr:ToastrService,
     private router:Router,
     private activatedRoute:ActivatedRoute,
     private cvService:CvService,
     private embaucheService:EmbaucheService
-    ){    }
+    ){}
     ngOnInit(): void {
       this.personne$=this.activatedRoute.data.pipe(
         map((data)=>{ const personne=data['personne'] ;
@@ -28,7 +30,10 @@ export class DetailComponent implements OnInit {
 
 
     deletePersonne(personne:Person){
-      this.cvService.deleteHttpPersonne(personne.id)
+      
+      this.cvService.deleteHttpPersonne$(personne.id).subscribe(
+        (val)=>{ this.toastr.success(`person with id${personne.id} deleted`)},
+        (erro)=>{this.toastr.error(`can't delete person with id${personne.id}`)})
       this.cvService.deletePersonne(personne);
       this.embaucheService.debaucherPersonne(personne);
       this.cvService.changeSelectedPerson(null)
