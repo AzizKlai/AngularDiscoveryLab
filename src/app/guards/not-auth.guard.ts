@@ -8,6 +8,10 @@ export const notAuthGuard: CanActivateFn = (route, state) => {
   const router=inject(Router)
   
   return loginService.isAuth$.pipe(
-   map((isLogged) =>{if(isLogged)router.navigate(['cv']); return !isLogged})
+    tap((isLogged) => {
+      if (isLogged){ 
+        router.navigate(['cv'])}}
+    ),
+   map((isLogged) => !isLogged)
   )
 };
