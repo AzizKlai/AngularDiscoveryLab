@@ -12,8 +12,8 @@
           <li class="nav-item ">
             <a class="nav-link" aria-current="page" [routerLink]="['cv','masterDetail']" [routerLinkActive]="'active'" >masterDetail</a>
           </li>
-          <li class="nav-item ">
-            <a class="nav-link" aria-current="page" [routerLink]="['cv','add']" [routerLinkActive]="'active'" >newCV</a>
+          <li class="nav-item " *ngIf="isAuthenticated|async">
+            <a class="nav-link" aria-current="page"   [routerLink]="['cv','add']" [routerLinkActive]="'active'" >newCV</a>
           </li>
           <li class="nav-item ">
             <a class="nav-link" [routerLink]="['miniword']"  [routerLinkActive]="'active'">miniword</a>
@@ -25,9 +25,9 @@
             <a class="nav-link" [routerLink]="['test']"  routerLinkActive='active'>test</a>
           </li>
           </ul>
-          <div class="d-flex navbar-expand-sm" style="margin-left: auto;" role="search">
-            <button *ngIf="!(user$|async)" class="btn btn-outline-success"[routerLink]="['login']">login</button>
-            <button *ngIf="user$ | async as user"  class="btn btn-outline-danger" (click)="logout()" >logout {{user.email}} </button>
+          <div class="d-flex navbar-expand-sm" style="margin-left: auto;">
+            <button *ngIf="!(isAuthenticated|async) as isAuth" class="btn btn-outline-success"[routerLink]="['login']">login</button>
+            <button *ngIf="(isAuthenticated|async) && (user$ | async) as user"  class="btn btn-outline-danger" (click)="logout()" >logout {{user.email}} </button>
           </div>
       </div>
     </div>

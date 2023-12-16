@@ -3,12 +3,15 @@ import { Person } from '../../Model/Person';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable, catchError, map, of, tap } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { environment } from 'src/environments/environment.development';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class CvService {
+  personnesUrl=environment.apiUrl.personnesUrl
+
   private personnes: Person[]=[];
   private fakePersonnes:Person[]=[];
 
@@ -27,7 +30,7 @@ export class CvService {
   }
 
       getHttpPersonnes$(): Observable<Person[]>{
-      return this.http.get<Person[]>('https://apilb.tridevs.net/api/personnes').pipe(
+      return this.http.get<Person[]>(this.personnesUrl).pipe(
         map((value)=>{
           this.personnes=[...this.fakePersonnes,...value]
           return this.personnes;
@@ -40,7 +43,7 @@ export class CvService {
 
     deleteHttpPersonne$(id : number){
       console.log("delete")
-    return  this.http.delete(`https://apilb.tridevs.net/api/personnes/${id}`)
+    return  this.http.delete(`${this.personnesUrl}/${id}`)
     }
 
     getPersonnes():Person[]{
@@ -48,13 +51,21 @@ export class CvService {
     }
 
     getPersonneById$(id: number): Observable<Person | null> {
-      const personne= this.personnes.find(personne=>{ 
+      //1st step search in local personnes
+      const personne1= this.personnes.find(personne=>{ 
         return personne.id==id;
       });
-      if(personne != undefined)
-        return of(personne)
-      else 
-        return of(null)
+      if(personne1 != undefined)
+        return of(personne1)
+      else {
+      //search with http request
+        const personne2 = this.getHttpPersonnes$().pipe(
+          map((personnes)=>{
+            const pers= personnes.find(person=>person.id==id)
+            if(pers!=undefined) return pers
+            else return null
+            }))
+        return personne2}
     }
     getPersonneByName$(name: string): Observable<Person[]> {
       if(name.length > 0){
@@ -62,7 +73,7 @@ export class CvService {
           {where: 
             {name:{like:`%${name}%`}}
                   }));
-        return this.http.get<Person[]>("https://apilb.tridevs.net/api/personnes/", { params });
+        return this.http.get<Person[]>(`${this.personnesUrl}/`, { params });
       }else{  
         return of([])
       }
@@ -97,7 +108,7 @@ export class CvService {
     //add person
     addHttpPerson$(person:Person) {
       return this.http.post<Person>(
-        `https://apilb.tridevs.net/api/personnes`,  //?access_token=${localStorage.getItem('id',)}
+        this.personnesUrl,  //?access_token=${localStorage.getItem('id',)}
         { name: person.name,
           firstname: person.firstname,
           cin: person.cin,

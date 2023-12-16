@@ -1,4 +1,4 @@
-<div class="container" (mouseleave)="onLeave()">
+<div class="container" (mouseleave)="onLeave()" (mouseenter)="onEnter()">
     <input  [formControl]="name" type="text" class="form-control" (blur)="onBlur()" (focus)="onFocus()" />
     <div *ngIf="(!isOut||isInputSelected) && (searchedPersons$ | async) as searchResults "  class="dropdownn">
         <a class="list-group-item list-group-item-action list-group-item-warning"

@@ -14,7 +14,6 @@ import { User } from 'src/app/Model/User';
 })
 export class LoginComponent {
   constructor(
-    private httpClient : HttpClient,
     private toastr: ToastrService,
     private loginService : LoginService,
     private router : Router,

@@ -29,8 +29,9 @@ export class AutocompleteSearchComponent implements OnInit {
   
   selectResult(result:any){}
   onBlur(){this.isInputSelected=false;}
-  onFocus(){this.isInputSelected=true;this.isOut=false;}
+  onFocus(){this.isInputSelected=true;}
   onLeave(){this.isOut=true; }
+  onEnter(){this.isOut=false; }
   
 
 }

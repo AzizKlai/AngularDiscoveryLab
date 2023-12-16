@@ -9,6 +9,9 @@ import { LoginComponent } from "./cv/login/login.component";
 import { MergeComponent } from "./operators/merge/merge.component";
 import { MasterDetailComponent } from "./cv/master-detail/master-detail.component";
 import { AddCvComponent } from "./cv/add-cv/add-cv.component";
+import { notAuthGuard } from "./guards/not-auth.guard";
+import { authGuard } from "./guards/auth.guard";
+import { exitAddCvGuard } from "./guards/exit-add-cv.guard";
 
 /*
 const APP_ROUTING: Routes = [
@@ -21,17 +24,17 @@ const APP_ROUTING: Routes = [
       {path : 'detail/:id' , component: DetailComponent}
     ]},
   {path: '**', component: NotfoundComponent}
-]*/ 
+]*/  
 const APP_ROUTING: Routes = [
   {path:'', redirectTo:'/cv', pathMatch:'full'},
-  {path: 'login', component: LoginComponent}, 
+  {path: 'login', component: LoginComponent, canActivate: [notAuthGuard],}, 
   {path: 'cv', children : [
     {path : '' , component: CvComponent},
     {path:'masterDetail',component: MasterDetailComponent,
-          children:[ {path : ':id' , component: DetailComponent,resolve: { personne: detailResolver },}]
+          children:[ {path : ':id' , component: DetailComponent, canActivate:[authGuard],resolve: { personne: detailResolver }}]
         },
-    {path : 'add' , component: AddCvComponent},
-    {path : 'detail/:id' , component: DetailComponent,resolve: { personne: detailResolver },}
+    {path : 'add' , component: AddCvComponent, canActivate:[authGuard],canDeactivate:[exitAddCvGuard] },
+    {path : 'detail/:id' , component: DetailComponent, canActivate:[authGuard],resolve: { personne: detailResolver }}
   ]},
   {path: 'miniword', component: MiniwordComponent},
   {path: 'test', component: TestComponent},

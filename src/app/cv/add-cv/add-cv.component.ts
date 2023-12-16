@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subscription, catchError, of, tap } from 'rxjs';
 import { CvService } from '../services/cv.service';
 import { Router } from '@angular/router';
 import { customCinValidator } from 'src/app/reactiveFormValidators/custom-cin.validator';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-cv',
@@ -18,9 +19,8 @@ export class AddCvComponent implements OnInit,OnDestroy {
   subscription=new Subscription()
   cvService=inject(CvService)
   router=inject(Router)
-  constructor(){
-    
-  }
+  toastr=inject(ToastrService)
+
 ngOnInit(): void {
  this.form= new FormGroup(
   {  name: new FormControl('az',{
@@ -63,12 +63,38 @@ ngOnInit(): void {
 
 addCv(){
   this.cvService.addPerson(this.form.value)
-  this.form.reset()
-  //this.router.navigate(['cv'])
+    this.cvService.addHttpPerson$(this.form.value).pipe(
+      tap((val)=>{this.toastr.success(`success adding ${this.form.value.name}  `)}),
+      catchError(()=>{this.toastr.error(`error adding ${this.form.value.name}`);
+       ;return of(null) })
+    ).subscribe()  
+    this.form.reset()
+    this.router.navigate(['cv'])
   
 }
 
 ngOnDestroy(): void {
-this.subscription?.unsubscribe()
+  this.subscription.unsubscribe()
+}
+
+
+
+canDeactivate() {
+  let empty = true;
+  let values = Object.values(this.form.value);
+
+  for (const value of values) {
+    if (value) {
+      empty = false;
+      break;
+    }
+  }
+  if (!empty) {
+    return window.confirm(
+      'You have unsaved changes. Do you really want to leave?',
+    );
+  }
+  return true;
 }
 }
+

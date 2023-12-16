@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ROUTING} from "./app.routing";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { MiniwordComponent } from './components/miniword/miniword.component';
 import { RainbowDirective } from './directives/rainbow.directive';
 import { TestComponent } from './components/test/test.component';
@@ -37,7 +37,15 @@ import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { AddCvComponent } from './cv/add-cv/add-cv.component';
 import { SliderComponent } from './rxjs/slider/slider.component';
 import { AutocompleteSearchComponent } from './cv/autocomplete-search/autocomplete-search.component';
+import { AuthentificationInterceptor } from './interceptors/authentification.interceptor';
 
+
+export const
+AuthentificationInterceptorProvider = {
+provide: HTTP_INTERCEPTORS,
+useClass: AuthentificationInterceptor,
+multi: true,
+};
 
 @NgModule({
   declarations: [
@@ -98,7 +106,8 @@ import { AutocompleteSearchComponent } from './cv/autocomplete-search/autocomple
   providers: [
     { provide:'randomId',
       useValue:uuidv4
-    }
+    },
+    AuthentificationInterceptorProvider
   ],
   bootstrap: [AppComponent]
 })
