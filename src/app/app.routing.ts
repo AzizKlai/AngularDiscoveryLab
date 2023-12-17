@@ -12,6 +12,7 @@ import { AddCvComponent } from "./cv/add-cv/add-cv.component";
 import { notAuthGuard } from "./guards/not-auth.guard";
 import { authGuard } from "./guards/auth.guard";
 import { exitAddCvGuard } from "./guards/exit-add-cv.guard";
+import { CustomPreloadingStrategy } from "./services/custom-preloading-strategy.service";
 
 /*
 const APP_ROUTING: Routes = [
@@ -27,8 +28,14 @@ const APP_ROUTING: Routes = [
 ]*/  
 const APP_ROUTING: Routes = [
   {path:'', redirectTo:'/cv', pathMatch:'full'},
-  {path: 'login', component: LoginComponent, canActivate: [notAuthGuard],}, 
-  {path: 'cv', children : [
+  {
+    path: 'login',
+    loadChildren: () =>
+      import('./cv/login/login.module').then((m) => m.LoginModule),
+      canActivate: [notAuthGuard],
+      component: LoginComponent,
+  },
+  {path: 'cv',data: { 'preload': true }, children : [
     {path : '' , component: CvComponent},
     {path:'masterDetail',component: MasterDetailComponent,
           children:[ {path : ':id' , component: DetailComponent, canActivate:[authGuard],resolve: { personne: detailResolver }}]
@@ -43,4 +50,6 @@ const APP_ROUTING: Routes = [
 
 ]
 
-export const ROUTING = RouterModule.forRoot(APP_ROUTING)
+export const ROUTING = RouterModule.forRoot(APP_ROUTING,{
+  preloadingStrategy: CustomPreloadingStrategy,
+})
